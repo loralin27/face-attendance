@@ -28,10 +28,13 @@ if menu == "📸 Mark Attendance":
         if st.button("✅ Mark Attendance"):
             with st.spinner("Processing..."):
                 res = requests.post(
-                    "https://face-attendance-4-5wml.onrender.com",
-                    files={"file": img_file.getvalue()}
-                )
+                "https://face-attendance-4-5wml.onrender.com/mark-attendance",
+                 files={"file": ("image.jpg", img_file.getvalue(), "image/jpeg")},
+                 timeout=30
+                 )
 
+            st.write("Status:", res.status_code)
+            st.write("Response:", res.text)
             try:
                 data = res.json()
 
