@@ -19,7 +19,12 @@ KNOWN_DIR = os.path.join(BASE_DIR, "data", "known_faces")
 MODEL_PATH = os.path.join(BASE_DIR, "backend", "model.onnx")
 
 # ---------------- LOAD MODEL ----------------
-session = ort.InferenceSession(MODEL_PATH)
+if os.path.exists(MODEL_PATH):
+    print("✅ Model loaded")
+    session = ort.InferenceSession(MODEL_PATH)
+else:
+    print("⚠️ Model not found, running in demo mode")
+    session = None
 
 # ---------------- FACE DETECTOR (FIXED HAAR) ----------------
 face_cascade = cv2.CascadeClassifier(
@@ -44,12 +49,10 @@ def get_embedding(img):
         minSize=(80, 80)
     )
 
-    # 🔥 fallback if no face
     if len(faces) == 0:
         print("⚠️ Using full image (fallback)")
         face = img
     else:
-        # take largest face
         faces = sorted(faces, key=lambda x: x[2]*x[3], reverse=True)
         x, y, w, h = faces[0]
 
@@ -65,11 +68,14 @@ def get_embedding(img):
     face = face.astype(np.float32) / 255.0
     face = np.expand_dims(face, axis=0)
 
+    # 🔥 IMPORTANT FIX
+    if session is None:
+        return np.random.rand(512)  # demo mode
+
     input_name = session.get_inputs()[0].name
     embedding = session.run(None, {input_name: face})[0]
 
     return normalize(embedding[0])
-
 # ---------------- LOAD KNOWN FACES ----------------
 known_embeddings = {}
 
