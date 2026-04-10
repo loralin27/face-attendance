@@ -2,6 +2,16 @@ import cv2
 import numpy as np
 import os
 import onnxruntime as ort
+import os
+
+MODEL_PATH = "model.onnx"
+
+if not os.path.exists(MODEL_PATH):
+    print(" Model not found, running in demo mode")
+    session = None
+else:
+    import onnxruntime as ort
+    session = ort.InferenceSession(MODEL_PATH)
 
 # ---------------- PATHS ----------------
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
