@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# Large ML models
+*.onnx
+*.caffemodel
+
+# temp files
+*.jpg
+*.png
+temp.jpg

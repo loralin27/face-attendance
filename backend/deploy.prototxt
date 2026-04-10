@@ -1,0 +1,29 @@
+name: "ResNet-10 SSD"
+input: "data"
+input_shape {
+  dim: 1
+  dim: 3
+  dim: 300
+  dim: 300
+}
+
+layer {
+  name: "data_bn"
+  type: "BatchNorm"
+  bottom: "data"
+  top: "data_bn"
+}
+
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data_bn"
+  top: "conv1"
+}
+
+layer {
+  name: "detection_out"
+  type: "DetectionOutput"
+  bottom: "conv1"
+  top: "detection_out"
+}
