@@ -1,8 +1,8 @@
 from fastapi import APIRouter, UploadFile, File
 import shutil
 
-from ..services.face_service import recognize_from_image
-from ..services.attendance_service import mark_attendance, get_all_attendance
+from app.services.face_service import recognize_from_image
+from app.services.attendance_service import mark_attendance, get_all_attendance
 
 router = APIRouter()
 
@@ -19,8 +19,8 @@ async def mark(file: UploadFile = File(...)):
 
         if name == "Unknown" or name == "No face detected":
             return {
-            "status": "fail",
-            "message": f"⚠️ {name}"
+                "status": "fail",
+                "message": f"⚠️ {name}"
             }
 
         record = mark_attendance(name)
