@@ -28,7 +28,7 @@ if menu == "📸 Mark Attendance":
         if st.button("✅ Mark Attendance"):
             with st.spinner("Processing..."):
                 res = requests.post(
-                    "http://127.0.0.1:8000/mark-attendance",
+                    "https://face-attendance-4-5wml.onrender.com",
                     files={"file": img_file.getvalue()}
                 )
 
@@ -47,7 +47,7 @@ if menu == "📸 Mark Attendance":
 elif menu == "📊 View Records":
     st.subheader("Attendance Records")
 
-    res = requests.get("http://127.0.0.1:8000/attendance")
+    res = requests.get("https://face-attendance-4-5wml.onrender.com")
 
     try:
         data = res.json()["data"]
