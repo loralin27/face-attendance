@@ -47,7 +47,7 @@ if menu == "📸 Mark Attendance":
 elif menu == "📊 View Records":
     st.subheader("Attendance Records")
 
-    res = requests.get("https://face-attendance-4-5wml.onrender.com")
+    res = requests.get("https://face-attendance-4-5wml.onrender.com/attendance")
 
     try:
         data = res.json()["data"]
